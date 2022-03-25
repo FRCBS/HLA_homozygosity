@@ -5,25 +5,28 @@ library(data.table)
 #Modified from the script created by Mark Christie on 3/1/2012
 
 ##########################################################################################
-# the file should consists of two columns:
-# allele1: chr "01:01"
-# allele2: chr "03:01"
+# prerequisite: results of the script HLA_imputation.R
 ##########################################################################################
 
-HLA_A <- read.table(file="your_HLA-A_allele_file",
+HLA_A <- read.table(file="imputation_HLA-A",
                         header = TRUE, sep = " ", na = NA, 
                         dec = ".", strip.white=TRUE,
                         stringsAsFactors = FALSE)
 
+# remove unnecessary columns
+HLA_A = HLA_A[,-c(4:5)]
 
 # rename the Allele 1 and 2 colums
 names(HLA_A)[names(HLA_A) == "allele1"] <- "HLA_A"
 names(HLA_A)[names(HLA_A) == "allele2"] <- "HLA_A"
 
 ##########################################################
-#now calculate the allele frequencies for HLA-A
+# calculate the allele frequencies for HLA-A
 
-#how many columns are there?    
+#remove unnecessary columns
+HLA_A=HLA_A[, -1]
+
+# how many columns are there?    
 L_HLA_A=ncol(HLA_A)
 
 #find the starting column number for each locus     
